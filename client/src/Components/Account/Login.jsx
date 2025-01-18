@@ -44,12 +44,20 @@ border-radius: 2px;
 box-shadow : 0 2px 4px 0 rgb(0 0 0 /20%);
 `;
 
+const Error = styled(Typography)`
+font-size : 10px;
+color: #ff6161;
+line-height: 0;
+margin-top: 10px;
+font-weight: 600;
+`
+
 const Text = styled(Typography)`
 color: #878787;
 font-size : 16px; 
 `;
 
-const SignUpinitialValues = {
+const signUpinitialValues = {
     name: '',
     username: '',
     password: ''
@@ -58,7 +66,7 @@ const SignUpinitialValues = {
 export default function Login() {
 
     const [account, toggleAccount] = useState('login');
-    const [signup, setSignup] = useState(SignUpinitialValues);
+    const [signup, setSignup] = useState(signUpinitialValues);
     const [error, showError] = useState('');
 
 const toggleSignUp = () => {
@@ -73,7 +81,13 @@ const OnInputChange = (e) => {
 
 const signupUser = async () => {
     let response = await API.userSignup(signup);
-    
+    if (response.isSuccess) {
+        showError('');
+        setSignup(signUpinitialValues);
+        toggleAccount('login');
+    } else {
+        showError('Something went wrong! please try again later');
+    }
 }
 
   return (
@@ -99,6 +113,7 @@ const signupUser = async () => {
                     <TextField  onChange={(e) => OnInputChange(e)} name='username' label="Enter Username" variant="standard" />
                     <TextField  onChange={(e) => OnInputChange(e)} name='password' label="Enter Password" variant="standard" />
 
+                    {error && <Error>{error}</Error>}
                     <SignUpButton onClick={() => signupUser()} >Signup</SignUpButton>
                     <Text style={{textAlign: 'center'}}>OR</Text>
                     <LoginButton variant="contained" onClick={() => toggleSignUp()}>Already have an account</LoginButton>
