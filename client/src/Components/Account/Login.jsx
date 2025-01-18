@@ -57,6 +57,11 @@ color: #878787;
 font-size : 16px; 
 `;
 
+const loginInitialValues = {
+    username: '',
+    password: ''
+};
+
 const signUpinitialValues = {
     name: '',
     username: '',
@@ -67,6 +72,7 @@ export default function Login() {
 
     const [account, toggleAccount] = useState('login');
     const [signup, setSignup] = useState(signUpinitialValues);
+    const [login, setLogin] = useState(loginInitialValues);
     const [error, showError] = useState('');
 
 const toggleSignUp = () => {
@@ -90,6 +96,20 @@ const signupUser = async () => {
     }
 }
 
+const onValueChange = (e) => {
+    setLogin({ ...login, [e.target.name]: e.target.value });
+}
+
+const loginUser = async () => {
+    let response = await API.userLogin(login);
+    if (response.isSuccess) {
+        showError('');
+    } else {
+        showError('Something went wrong! please try again later');
+    }
+}
+
+
   return (
     <Component>
         <Box>
@@ -97,12 +117,12 @@ const signupUser = async () => {
             {
                 account === 'login' ?
                     <Wrapper>
-                        <TextField  label="Login" variant="standard" />
-                        <TextField  label="Password" variant="standard" />
+                        <TextField  label="Login" variant="standard" value={login.username} onChange={(e) => onValueChange(e)} name='username'/>
+                        <TextField  label="Password" variant="standard" value={login.password} onChange={(e) => onValueChange(e)} name="password" />
                         
                         {error && <Error>{error}</Error>}
 
-                        <LoginButton variant="contained">Login</LoginButton>
+                        <LoginButton variant="contained" onClick={() => loginUser()}>Login</LoginButton>
                         <Text style={{textAlign: 'center'}}>OR</Text>
                         <SignUpButton onClick={() => toggleSignUp()}>Sign Up</SignUpButton>
                     </Wrapper>
