@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route, Outlet, Navigate} from 'react-router-dom'
 import Login from './Components/Account/Login'
 import Home from './Components/home/Home'
 import Header from './Components/header/Header'
+import CreatePost from './Components/create/CreatePost';
 
 // Here aunthenticated user is allowed to access the page.
 const PrivateRoute = ({ isAuthenticated, ...props }) => {
@@ -36,6 +37,11 @@ function App() {
             <Route path='/' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
               <Route path='/' element={<Home />} />
             </Route>
+
+            <Route path='/create' element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
+              <Route path='/create' element={<CreatePost />} />
+            </Route>
+
           </Routes>
         </div>
       </BrowserRouter>
