@@ -135,7 +135,7 @@ const loginUser = async () => {
                 account === 'login' ?
                     <Wrapper>
                         <TextField  label="Login" variant="standard" value={login.username} onChange={(e) => onValueChange(e)} name='username'/>
-                        <TextField  label="Password" variant="standard" value={login.password} onChange={(e) => onValueChange(e)} name="password" />
+                        <TextField  label="Password" type="password"  variant="standard" value={login.password} onChange={(e) => onValueChange(e)} name="password" />
                         
                         {error && <Error>{error}</Error>}
 
@@ -145,16 +145,35 @@ const loginUser = async () => {
                     </Wrapper>
             :
 
-                <Wrapper>
-                    <TextField  onChange={(e) => OnInputChange(e)} name='name' label="Enter Name" variant="standard" />
-                    <TextField  onChange={(e) => OnInputChange(e)} name='username' label="Enter Username" variant="standard" />
-                    <TextField  onChange={(e) => OnInputChange(e)} name='password' label="Enter Password" variant="standard" />
-
-                    {error && <Error>{error}</Error>}
-                    <SignUpButton onClick={() => signupUser()} >Signup</SignUpButton>
-                    <Text style={{textAlign: 'center'}}>OR</Text>
-                    <LoginButton variant="contained" onClick={() => toggleSignUp()}>Already have an account</LoginButton>
-                </Wrapper>
+            <Wrapper>
+            <TextField
+                label="Enter Name"
+                // variant="standard"
+                onChange={(e) => OnInputChange(e)}
+                name="name"
+            />
+            <TextField
+                label="Enter Username"
+                // variant="standard"
+                onChange={(e) => OnInputChange(e)}
+                name="username"
+            />
+            <TextField
+                label="Enter Password"
+                // variant="standard"
+                type="password" 
+                onChange={(e) => OnInputChange(e)}
+                name="password"
+            />
+        
+            {error && <Error>{error}</Error>}
+            <SignUpButton onClick={() => signupUser()}>Signup</SignUpButton>
+            <Text style={{ textAlign: "center" }}>OR</Text>
+            <LoginButton variant="contained" onClick={() => toggleSignUp()}>
+                Already have an account
+            </LoginButton>
+        </Wrapper>
+        
             }
         </Box>
     </Component>
