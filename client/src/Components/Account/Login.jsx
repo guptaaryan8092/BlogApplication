@@ -71,7 +71,7 @@ const signUpinitialValues = {
     password: ''
 }
 
-export default function Login() {
+const Login = ({isUserAuthenticated}) => {
 
     const [account, toggleAccount] = useState('login');
     const [signup, setSignup] = useState(signUpinitialValues);
@@ -117,6 +117,8 @@ const loginUser = async () => {
 
         setAccount({ username: response.data.username, name: response.data.name });
 
+        isUserAuthenticated(true);
+
         navigate('/');
 
     } else {
@@ -159,3 +161,4 @@ const loginUser = async () => {
   )
 }
 
+export default Login;
