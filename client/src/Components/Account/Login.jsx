@@ -5,6 +5,8 @@ import {Box, TextField, Button, styled, Typography} from '@mui/material'
 import {API} from '../../service/api.js'
 import { DataContext } from '../../context/DataProvider.jsx';
 
+import { useNavigate } from 'react-router-dom';
+
 const Component = styled(Box) `
 width: 400px;
 margin: auto;
@@ -77,6 +79,8 @@ export default function Login() {
     const [error, showError] = useState('');
 
     const {setAccount} = useContext(DataContext);
+    const navigate = useNavigate(); // useNavigate is a hook from react-router-dom.
+
 
 const toggleSignUp = () => {
     toggleAccount(account === 'login' ? 'signup' : 'login');
@@ -112,6 +116,8 @@ const loginUser = async () => {
         sessionStorage.setItem('refreshToken', `Bearer ${response.data.refreshToken}`);
 
         setAccount({ username: response.data.username, name: response.data.name });
+
+        navigate('/');
 
     } else {
         showError('Something went wrong! please try again later');
