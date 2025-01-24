@@ -80,10 +80,12 @@ const CreatePost = () => {
         post.username = account.username;
     }, [file])
 
-    // const savePost = async () => {
-    //     await API.createPost(post);
-    //     navigate('/');
-    // }
+    const savePost = async () => {
+        let response = await API.createPost(post);
+        if(response.isSuccess) {
+            navigate('/');
+        }
+    }
 
     const handleChange = (e) => {
         setPost({ ...post, [e.target.name]: e.target.value });
@@ -104,7 +106,7 @@ const CreatePost = () => {
                     onChange={(e) => setFile(e.target.files[0])}
                 />
                 <InputTextField onChange={(e) => handleChange(e)} name='title' placeholder="Title" />
-                <Button variant="contained" color="primary">Publish</Button>
+                <Button variant="contained" onClick={() => savePost()} color="primary">Publish</Button>
             </StyledFormControl>
 
             <Textarea

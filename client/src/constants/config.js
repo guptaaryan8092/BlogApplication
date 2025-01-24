@@ -1,3 +1,5 @@
+import CreatePost from "../Components/create/CreatePost"
+
 // API NOTIFICATION MESSAGES
 export const API_NOTIFICATION_MESSAGES = {
     loading: {
@@ -29,5 +31,6 @@ export const SERVICE_URLS = {
     userSignup: { url: '/signup', method: 'POST' },
     userLogin: { url: '/login', method: 'POST' },
     uploadFile: { url: 'file/upload', method: 'POST' },
+    createPost: { url: '/create', method: 'POST' },
     
 }
