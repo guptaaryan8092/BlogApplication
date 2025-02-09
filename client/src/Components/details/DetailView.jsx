@@ -64,6 +64,8 @@ const DetailView = () => {
     const { account } = useContext(DataContext);
 
     const {id} = useParams();
+    const navigate = useNavigate();
+
     const url = 'https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80';
 
     useEffect(() => {
@@ -75,6 +77,14 @@ const DetailView = () => {
         }
         fetchData();
     }, []);
+
+    const deleteBlog = async () => {  
+
+        let response = await API.deletePost(post._id);
+        if(response.isSuccess) {
+            navigate('/');
+        }
+    }
 
     return (
         <Container>
