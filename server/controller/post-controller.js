@@ -17,7 +17,7 @@ export const getAllPosts = async (request, response) => {
     let posts;
     try {
         // if(username) 
-        //     let posts = await Post.find({});
+        //     posts = await Post.find({username: username});
         if (category) 
             posts = await Post.find({ categories: category });
         else 
@@ -36,5 +36,21 @@ export const getPost = async (request, response) => {
         response.status(200).json(post);
     } catch (error) {
         response.status(500).json({ msg: error.message });
+    }
+}
+
+export const updatePost = async (request, response) => {
+    try {
+        const post = await Post.findById(request.params.id);
+
+        if (!post) {
+            response.status(404).json({ msg: 'Post not found' });
+        }
+        //$set or  $addToSet
+        await Post.findByIdAndUpdate( request.params.id, { $set: request.body })
+
+       response.status(200).json({ msg: 'Post updated successfully' });
+    } catch (error) {
+        response.status(500).json({error: error.message});
     }
 }
