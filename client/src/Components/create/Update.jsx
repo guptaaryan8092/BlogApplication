@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 
 import { styled, Box, TextareaAutosize, Button, InputBase, FormControl  } from '@mui/material';
 import { AddCircle as Add } from '@mui/icons-material';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 
 import { API } from '../../service/api';
 import { DataContext } from '../../context/DataProvider';
@@ -56,13 +56,23 @@ const Update = () => {
     const [post, setPost] = useState(initialPost);
     const [file, setFile] = useState('');
 
-    // const navigate = useNavigate();
     const { account } = useContext(DataContext);
 
     const location = useLocation();
-    
-    
+    // const navigate = useNavigate();
+    const {id} = useParams();
+     
     const url = post.picture ? post.picture : 'https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80';
+
+    useEffect(() => {
+        const fetchData = async () => {
+            let response = await API.getPostById(id);
+            if (response.isSuccess) {
+                setPost(response.data);
+            }
+        }
+        fetchData();
+    }, []);
     
     useEffect(() => {
         const getImage = async () => { 
@@ -80,10 +90,10 @@ const Update = () => {
         post.username = account.username;
     }, [file])
 
-    const savePost = async () => {
-        let response = await API.createPost(post);
+    const updateBlogPost = async () => {
+        let response = await API.updatePost(post);
         if(response.isSuccess) {
-            navigate('/');
+            navigate(`/details/${id}`);
         }
     }
 
@@ -105,8 +115,8 @@ const Update = () => {
                     style={{ display: "none" }}
                     onChange={(e) => setFile(e.target.files[0])}
                 />
-                <InputTextField onChange={(e) => handleChange(e)} name='title' placeholder="Title" />
-                <Button variant="contained" onClick={() => savePost()} color="primary">Publish</Button>
+                <InputTextField onChange={(e) => handleChange(e)} name='title' value={post.title} placeholder="Title" />
+                <Button variant="contained" onClick={() => updateBlogPost()} color="primary">Update</Button>
             </StyledFormControl>
 
             <Textarea
@@ -114,6 +124,7 @@ const Update = () => {
                 placeholder="Tell your story..."
                 name='description'
                 onChange={(e) => handleChange(e)} 
+                value={post.description}
             />
         </Container>
     )
