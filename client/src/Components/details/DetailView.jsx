@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useState, useEffect, useContext } from 'react';
 
@@ -9,6 +8,9 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { API } from '../../service/api.js';
 
 import { DataContext } from '../../context/DataProvider.jsx';
+
+//Components
+import Comments from './comments/Comments.jsx';
 
 const Container = styled(Box)(({ theme }) => ({
     margin: '50px 100px',
@@ -110,6 +112,8 @@ const DetailView = () => {
             </Author>
 
                 <Description>{post.description}</Description>
+
+                <Comments post={post} />
         </Container>
     )
 }

@@ -25,8 +25,16 @@ const PrivateRoute = ({ isAuthenticated, ...props }) => {
 
 
 function App() {
+  // Load authentication state from localStorage
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    localStorage.getItem('isAuthenticated') === 'true'
+  );
 
-  const [isAuthenticated, isUserAuthenticated] = useState(false);
+  // Function to update authentication state
+  const isUserAuthenticated = (status) => {
+    setIsAuthenticated(status);
+    localStorage.setItem('isAuthenticated', status);  // Persist login state
+  };
 
   return (
     <DataProvider>
