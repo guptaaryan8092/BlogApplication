@@ -4,6 +4,50 @@ import { API } from "../../service/api.js";
 import { DataContext } from "../../context/DataProvider.jsx";
 import { useNavigate } from "react-router-dom";
 
+// // Global style for the body to add a background image
+// const globalStyles = `
+//   body {
+//     margin: 0;
+//     padding: 0;
+//     background-image: url(/Assets/Background/background.gif); /* Add your background image path here */
+//     //background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(/Assets/Background/background.gif);
+//     //background-color: rgba(0, 0, 0, 0.6);
+//     background-size: cover;
+//     background-position: center;
+//     background-repeat: no-repeat;
+//     min-height: 100vh;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//   }
+// `;
+
+// // Inject global styles
+// const styleSheet = document.createElement("style");
+// styleSheet.type = "text/css";
+// styleSheet.innerText = globalStyles;
+// document.head.appendChild(styleSheet);
+
+// Styled wrapper for the About page
+const AboutWrapper = styled(Box)(({ theme }) => ({
+  backgroundImage: "url(/Assets/Background/background.gif)", // Default landscape image
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  marginTop: "-66px",
+  backgroundRepeat: "no-repeat",
+  minHeight: "100vh",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+
+  // Media query for small devices
+  [theme.breakpoints.down("sm")]: {
+    //backgroundImage: "url(/Assets/Background/background.gif)", // Portrait image for small screens
+    backgroundSize: "cover",
+    backgroundPosition: "top center",
+  },
+}));
+
 const Component = styled(Box)`
   width: 420px;
   margin: auto;
@@ -14,6 +58,10 @@ const Component = styled(Box)`
   text-align: center;
   position: relative;
   transition: transform 0.3s ease-in-out;
+  //background-image: url(/Assets/Background/background.gif); /* Add your background image path here */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 
   &:hover {
     transform: scale(1.02);
@@ -158,8 +206,9 @@ const Login = ({ isUserAuthenticated }) => {
   };
 
   return (
-    <Component>
-      <Image src="/Assets/Logo/logo.gif" alt="logo" />
+    <AboutWrapper>
+         <Component>
+      <Image src="/Assets/Logo/logo.png" alt="logo" />
       {account === "login" ? (
         <Wrapper>
           <StyledTextField label="Username" variant="outlined" value={login.username} onChange={onValueChange} name="username" />
@@ -179,6 +228,8 @@ const Login = ({ isUserAuthenticated }) => {
         </Wrapper>
       )}
     </Component>
+    </AboutWrapper>
+   
   );
 };
 
