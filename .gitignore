@@ -1,0 +1,25 @@
+#Logs
+logs
+*.log
+npm-debug.log*
+
+#Node modules
+client/node_modules/
+server/node_modules/
+
+# Environment Variables
+client/.env
+client/.env.local
+client/.env.*local
+server/.env
+server/.env.local
+server/.env.*.local
+
+# Build output
+client/dist/
+server/dist/
+
+#Editors directories and files
+
+.vscodes/*
+
